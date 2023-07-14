@@ -1,0 +1,48 @@
+.header {
+    border-bottom: 1px solid #f6f6f6;
+    padding: 40px 0;
+
+    span {
+        color: #f6f6f6;
+    }
+
+    .container__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        @media(max-width:645px) {
+            flex-direction: column;
+
+            .header__cart {
+                margin-top: 30px;
+            }
+        }
+
+    }
+
+    &__logo {
+        display: flex;
+        justify-content: center;
+
+        img {
+            margin-right: 15px;
+        }
+    }
+
+   
+
+    p {
+        color: #7b7b7b;
+    }
+
+
+}
+
+h1 {
+    color: #181818;
+    font-size: 24px;
+    letter-spacing: 1%;
+    font-weight: 800;
+    text-transform: uppercase;
+}
