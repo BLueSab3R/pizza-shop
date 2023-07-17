@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import './_header.scss'
 import '../App.scss'
 import Search from './search/Search'
-const Header = ({setSearchValue, searchValue}) => {
+const Header = () => {
     return (
         <div className="header">
             <div className="container">
@@ -19,9 +19,8 @@ const Header = ({setSearchValue, searchValue}) => {
                         </div>
                     </Link>
                     <Search
-                     setSearchValue = {setSearchValue}
-                     searchValue = {searchValue}
-                     />
+
+                    />
                     <Link to='cart'>
                         <div className="header__cart">
                             <div className="button button--cart">

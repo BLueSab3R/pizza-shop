@@ -5,10 +5,11 @@ import Pagination from '../components/paginate/Pagination';
 import Items from '../components/PizzaBlock/Items';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort';
+import { SearchContext } from '../App';
 
 
-
-const Home = ({ searchValue, setSearchValue }) => {
+const Home = () => {
+    const { searchValue} = React.useContext(SearchContext);
     const itemsPerPage = 8;
     const [isLoading, setIsLoading] = React.useState(true);
     const [items, setItems] = React.useState([]);
