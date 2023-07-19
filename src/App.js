@@ -3,15 +3,20 @@ import './App.scss';
 import React from 'react';
 import Home from './pages/Home';
 import { Route, Routes } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
 import Error from './pages/Error';
 import Cart from './pages/Cart';
+
 
 
 export const SearchContext = React.createContext();
 
 function App() {
   const [searchValue, setSearchValue] = React.useState('');
+ 
+
   return (
+
     <div className="App">
       <div className="wrapper">
         <SearchContext.Provider value={{ searchValue, setSearchValue }}>
@@ -32,8 +37,8 @@ function App() {
       </div>
     </div>
   );
-}
 
+}
 export default App;
 
 

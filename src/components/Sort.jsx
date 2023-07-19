@@ -1,7 +1,8 @@
 import React from 'react'
 import '../App.scss'
 import './_sort.scss'
-const Sort = ({ categoryId, sortType, onClickCategory, onClickSort, onClickOrder }) => {
+const Sort = ({ categoryId, sortType, onChangeCategory, onClickSort, onClickOrder }) => {
+
     const [isOpen, setIsOpen] = React.useState(false);
     const [descending, setDescending] = React.useState(true);
     const categories = [
@@ -19,11 +20,9 @@ const Sort = ({ categoryId, sortType, onClickCategory, onClickSort, onClickOrder
     const orderChange = (orderType) => {
         setDescending(!descending)
         onClickOrder(orderType);
-        console.log(list);
     }
     const sortHandle = (chosed) => {
         onClickSort(chosed)
-
     }
     return (
 
@@ -33,7 +32,7 @@ const Sort = ({ categoryId, sortType, onClickCategory, onClickSort, onClickOrder
                     {categories.map((categoryType, index) =>
                         <li
                             key={index}
-                            onClick={() => onClickCategory(index)}
+                            onClick={() => onChangeCategory(index)}
                             className={categoryId === index ? 'active' : ''}>
                             {categoryType}
                         </li>
