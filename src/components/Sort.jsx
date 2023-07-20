@@ -1,8 +1,12 @@
 import React from 'react'
 import '../App.scss'
 import './_sort.scss'
-const Sort = ({ categoryId, sortType, onChangeCategory, onClickSort, onClickOrder }) => {
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
 
+const Sort = ({ categoryId, onChangeCategory, onChangeSort, onClickOrder }) => {
+    const dispatch = useDispatch();
+    const sort = useSelector((state) => state.filter.sort)
     const [isOpen, setIsOpen] = React.useState(false);
     const [descending, setDescending] = React.useState(true);
     const categories = [
@@ -21,8 +25,12 @@ const Sort = ({ categoryId, sortType, onChangeCategory, onClickSort, onClickOrde
         setDescending(!descending)
         onClickOrder(orderType);
     }
+    const categoryHandle = (index) => {
+        onChangeCategory(index)
+    }
     const sortHandle = (chosed) => {
-        onClickSort(chosed)
+        console.log(sort);
+        dispatch(setSort(chosed));
     }
     return (
 
@@ -32,7 +40,7 @@ const Sort = ({ categoryId, sortType, onChangeCategory, onClickSort, onClickOrde
                     {categories.map((categoryType, index) =>
                         <li
                             key={index}
-                            onClick={() => onChangeCategory(index)}
+                            onClick={() => categoryHandle(index)}
                             className={categoryId === index ? 'active' : ''}>
                             {categoryType}
                         </li>
@@ -61,7 +69,7 @@ const Sort = ({ categoryId, sortType, onChangeCategory, onClickSort, onClickOrde
                         </svg>
                     }
                     <b>Sort by:</b>
-                    <span onClick={() => setIsOpen(!isOpen)}>{sortType.name}</span>
+                    <span onClick={() => setIsOpen(!isOpen)}>{sort.name}</span>
 
                 </div>
                 {isOpen &&
@@ -71,7 +79,7 @@ const Sort = ({ categoryId, sortType, onChangeCategory, onClickSort, onClickOrde
                                 <li
                                     onClick={() => sortHandle(sortChosed)}
                                     key={index}
-                                    className={sortType.sortProperty === sortChosed.sortProperty ? 'active' : ''} //порівнюємо з тим, що у нас зберігається в батьківському компоненті з тим, що ми зараз рендеримо
+                                    className={sort.sortProperty === sortChosed.sortProperty ? 'active' : ''} //порівнюємо з тим, що у нас зберігається в батьківському компоненті з тим, що ми зараз рендеримо
                                 >{sortChosed.name}</li>
                             )}
                         </ul>

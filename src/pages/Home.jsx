@@ -6,19 +6,17 @@ import Items from '../components/PizzaBlock/Items';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort';
 import { SearchContext } from '../App';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFilterId, setSortObj } from '../redux/slices/filterSlice';
 
 const Home = () => {
+    const dispatch = useDispatch();
     const categoryId = useSelector((state) => state.filter.categoryId);
+    const sortType = useSelector((state) => state.filter.sort.sortProperty);
     const { searchValue } = React.useContext(SearchContext);
     const itemsPerPage = 8;
     const [isLoading, setIsLoading] = React.useState(true);
     const [items, setItems] = React.useState([]);
-    // const [categoryId, setCategoryId] = React.useState(0);
-    const [sortType, setSortType] = React.useState({
-        name: 'popularity',
-        sortProperty: 'rating'
-    });
     const [orderType, setOrderType] = React.useState('asc');
     const [currentPage, setCurrentPage] = React.useState(0);
 
@@ -39,11 +37,10 @@ const Home = () => {
 
     React.useEffect(() => {
         const category = categoryId > 0 ? `category=${categoryId}` : '';
-
         async function categoryFilter() {
             try {
                 const response = await fetch(
-                    `https://649049651e6aa71680caf586.mockapi.io/Items?${category}&sortBy=${sortType.sortProperty}&order=${orderType}`);
+                    `https://649049651e6aa71680caf586.mockapi.io/Items?${category}&sortBy=${sortType}&order=${orderType}`);
                 const item = await response.json();
                 setItems(item);
             } catch (error) {
@@ -54,8 +51,6 @@ const Home = () => {
         }
         categoryFilter();
     }, [categoryId, sortType, orderType])
-    console.log('redux state', categoryId);
-    const setCategoryId = () => { };
 
 
     const pizzas = items
@@ -71,15 +66,14 @@ const Home = () => {
         setCurrentPage(selectedPage.selected);
     };
     const onChangeCategory = (id) => {
-        console.log(id);
+        dispatch(setFilterId(id));
     }
+   
 
     return (
         <div>
             <Sort
                 onChangeCategory={onChangeCategory}
-                onClickCategory={(id) => setCategoryId(id)}
-                onClickSort={(type) => setSortType(type)}
                 onClickOrder={(order) => setOrderType(order)}
                 categoryId={categoryId}
                 sortType={sortType}
