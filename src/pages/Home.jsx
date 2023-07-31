@@ -7,7 +7,8 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Sort from '../components/Sort';
 import { SearchContext } from '../App';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFilterId, setSortObj } from '../redux/slices/filterSlice';
+import { setFilterId } from '../redux/slices/filterSlice';
+import axios from 'axios';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const Home = () => {
     const itemsPerPage = 8;
     const [isLoading, setIsLoading] = React.useState(true);
     const [items, setItems] = React.useState([]);
-    const [orderType, setOrderType] = React.useState('asc');
+    const [orderType, setOrderType] = React.useState('desc');
     const [currentPage, setCurrentPage] = React.useState(0);
 
     React.useEffect(() => {
@@ -39,10 +40,11 @@ const Home = () => {
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         async function categoryFilter() {
             try {
-                const response = await fetch(
-                    `https://649049651e6aa71680caf586.mockapi.io/Items?${category}&sortBy=${sortType}&order=${orderType}`);
-                const item = await response.json();
-                setItems(item);
+                axios.get(`https://649049651e6aa71680caf586.mockapi.io/Items?${category}&sortBy=${sortType}&order=${orderType}`
+                )
+                    .then(response => {
+                        setItems(response.data)
+                    });
             } catch (error) {
                 console.log('Error fetching items:', error);
             } finally {
@@ -68,7 +70,7 @@ const Home = () => {
     const onChangeCategory = (id) => {
         dispatch(setFilterId(id));
     }
-   
+
 
     return (
         <div>

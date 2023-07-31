@@ -3,34 +3,33 @@ import '../App.scss'
 import './_sort.scss'
 import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
-
-const Sort = ({ categoryId, onChangeCategory, onChangeSort, onClickOrder }) => {
+const categories = [
+    'All',
+    'meat',
+    'vegeterian',
+    'grill',
+    'spice',
+    'closed',
+];
+const list = [{ name: 'popularity', sortProperty: 'rating' },
+{ name: 'price', sortProperty: 'price' },
+{ name: 'alphabet', sortProperty: 'title' },
+];
+const Sort = ({ categoryId, onChangeCategory, onClickOrder }) => {
     const dispatch = useDispatch();
     const sort = useSelector((state) => state.filter.sort)
     const [isOpen, setIsOpen] = React.useState(false);
     const [descending, setDescending] = React.useState(true);
-    const categories = [
-        'All',
-        'meat',
-        'vegeterian',
-        'grill',
-        'spice',
-        'closed',
-    ];
-    const list = [{ name: 'popularity', sortProperty: 'rating' },
-    { name: 'price', sortProperty: 'price' },
-    { name: 'alphabet', sortProperty: 'title' },
-    ];
+
     const orderChange = (orderType) => {
         setDescending(!descending)
         onClickOrder(orderType);
     }
-    const categoryHandle = (index) => {
-        onChangeCategory(index)
-    }
+    const categoryHandle = (index) => onChangeCategory(index);
     const sortHandle = (chosed) => {
         console.log(sort);
         dispatch(setSort(chosed));
+        setIsOpen(false);
     }
     return (
 
