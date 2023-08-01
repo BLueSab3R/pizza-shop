@@ -18,6 +18,7 @@ const list = [{ name: 'popularity', sortProperty: 'rating' },
 const Sort = ({ categoryId, onChangeCategory, onClickOrder }) => {
     const dispatch = useDispatch();
     const sort = useSelector((state) => state.filter.sort)
+    const sortRef = React.useRef();
     const [isOpen, setIsOpen] = React.useState(false);
     const [descending, setDescending] = React.useState(true);
 
@@ -26,6 +27,22 @@ const Sort = ({ categoryId, onChangeCategory, onClickOrder }) => {
         onClickOrder(orderType);
     }
     const categoryHandle = (index) => onChangeCategory(index);
+
+    const handleClick = () => {
+        setIsOpen(!isOpen)
+    }
+
+    React.useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.composedPath().includes(sortRef.current)) {
+                setIsOpen(false);
+            }
+        };
+        document.body.addEventListener('click', handleClickOutside);
+        return () => {
+            document.body.removeEventListener('click', handleClickOutside)
+        }
+    }, [])
     const sortHandle = (chosed) => {
         console.log(sort);
         dispatch(setSort(chosed));
@@ -47,7 +64,7 @@ const Sort = ({ categoryId, onChangeCategory, onClickOrder }) => {
 
                 </ul>
             </div>
-            <div className="sort">
+            <div ref={sortRef} className="sort">
                 <div className="sort__label">
                     {descending ?
                         <svg
@@ -68,7 +85,7 @@ const Sort = ({ categoryId, onChangeCategory, onClickOrder }) => {
                         </svg>
                     }
                     <b>Sort by:</b>
-                    <span onClick={() => setIsOpen(!isOpen)}>{sort.name}</span>
+                    <span onClick={handleClick}>{sort.name}</span>
 
                 </div>
                 {isOpen &&

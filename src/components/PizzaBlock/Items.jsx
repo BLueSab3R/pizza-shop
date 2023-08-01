@@ -1,11 +1,27 @@
 import React from 'react'
 import '../_items.scss'
 import '../../App.scss'
-
-const Items = ({ name, price, imageUrl, sizes, types }) => {
+import { useDispatch, useSelector } from 'react-redux/es/exports'
+import { addItem } from '../../redux/slices/cartSlice'
+const Items = ({ id, name, price, imageUrl, sizes, types }) => {
   const typeNames = ['thin', 'traditional'];
+  const cartItem = useSelector(state => state.cart.items.find(obj => obj.id === id));
+  const addedItem = cartItem ? cartItem.count : 0;
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
+  const dispatch = useDispatch();
+  const onClickAdd = () => {
+    const item = {
+      id,
+      name,
+      price,
+      sizes: activeSize,
+      types: typeNames[activeType],
+      imageUrl,
+    }
+    dispatch(addItem(item));
+  }
+
   return (
     <div className="cover">
       <div className="pizza__block">
@@ -24,7 +40,8 @@ const Items = ({ name, price, imageUrl, sizes, types }) => {
             {
               sizes.map((size, index) =>
                 <li key={index} onClick={() => setActiveSize(index)} className={activeSize === index ? 'active' : ''}>
-                  {size}</li>)
+                  {size}
+                </li>)
             }
           </ul>
         </div>
@@ -32,7 +49,7 @@ const Items = ({ name, price, imageUrl, sizes, types }) => {
           <div className="pizza__block__price">
             {price}$
           </div>
-          <div className="button button--outline button--add">
+          <div onClick={onClickAdd} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
@@ -45,6 +62,8 @@ const Items = ({ name, price, imageUrl, sizes, types }) => {
               />
             </svg>
             <span>Add</span>
+            {addedItem > 0 &&  <i>{ addedItem }</i>}
+            {/* <i>{addedItem}</i> */}
           </div>
         </div>
       </div>
