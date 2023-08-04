@@ -1,10 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, UseSelector } from 'react-redux/es/hooks/useSelector'
 
 import '../App.scss';
 import './cart.scss'
 
 const Cart = () => {
+  const { items, totalPrice } = useSelector(state => state.cart);
+
   return (
     <div className='container container__cart'>
       <div className="cart__top">
@@ -19,12 +22,42 @@ const Cart = () => {
         </div>
       </div>
       <div className="cart__items">
+        <div className="cart__item">
+          <div className="cart__item-img">
+            <img
+              width={140}
+              className="pizza-block__image"
+              src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+              alt="Pizza"
+            />
+          </div>
+          <div className="cart__item-info">
+            <h3>Сырный цыпленок</h3>
+            <p>тонкое тесто, 26 см.</p>
+          </div>
+          <div className="cart__item-count">
+            <button class='color'>
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M11 8H4V7H11V8Z" fill="orange" /> </svg>
+            </button>
+            <b>2</b>
+            <button class='color'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="orange" class="bi bi-plus" viewBox="0 0 16 16"> <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" /> </svg>
+            </button>
 
+          </div>
+          <div className="cart__item-price">
+            <b>770 ₽</b>
+          </div>
+          <div className="button--remove">
+            <button>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>            </button>
+          </div>
+        </div>
       </div>
       <div className="cart__bottom">
         <div className="cart_bottom__details">
-          <span>Total pizzas: <b>0</b></span>
-          <span>To paying: 0$</span>
+          <span>Total pizzas: <b>{items.length}</b></span>
+          <span>To paying: {totalPrice}$</span>
         </div>
       </div>
       <div className="cart__bottom__buttons">

@@ -51,6 +51,7 @@ body {
   cursor: pointer;
   transition: background-color 0.15ms ease-in-out, border-color 0.15ms ease-in-out;
   border: 1px solid transparent;
+  min-height: 45px;
 
   &,
   span {
@@ -80,6 +81,8 @@ body {
     margin-left: 14px;
     margin-right: 14px;
   }
+
+
 
   &--cart {
     display: flex;
@@ -125,6 +128,23 @@ body {
 
   }
 
+  &--cart {
+    display: flex;
+    align-items: center;
+    line-height: 23px;
+    padding: 12px 25px;
+
+    svg {
+      margin-right: 8px;
+      margin-bottom: 1px;
+    }
+
+    span {
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+
   &--add {
     svg {
       margin-right: 2px;
@@ -153,6 +173,7 @@ body {
       }
     }
   }
+
 
 
 }

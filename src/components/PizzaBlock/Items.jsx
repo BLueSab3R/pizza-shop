@@ -62,8 +62,7 @@ const Items = ({ id, name, price, imageUrl, sizes, types }) => {
               />
             </svg>
             <span>Add</span>
-            {addedItem > 0 &&  <i>{ addedItem }</i>}
-            {/* <i>{addedItem}</i> */}
+            {addedItem > 0 &&  <i>{ addedItem }</i>}  
           </div>
         </div>
       </div>

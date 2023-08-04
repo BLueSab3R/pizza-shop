@@ -19,7 +19,6 @@ function App() {
 
     <div className="App">
       <div className="wrapper">
-        <div className="bgClickCatcher"></div>
         <SearchContext.Provider value={{ searchValue, setSearchValue }}>
           <div className="container">
             <Header
